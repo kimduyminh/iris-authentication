@@ -150,6 +150,7 @@ def iterate_dataset_normalize(dataset_path):
     print("Error files: ")
     for error_id in error_ids:
         print(error_id)
+
 print("Multiple preprocessing")
 print("1. Multiple localization")
 print("2. Multiple Normalization")
