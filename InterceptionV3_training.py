@@ -22,7 +22,7 @@ def split_data(base_folder):
                 labels.append(folder_index)
 
     # Split into train and validation sets
-    train_paths, val_paths, train_labels, val_labels = train_test_split(image_paths, labels, test_size=0.2, random_state=42)
+    train_paths, val_paths, train_labels, val_labels = train_test_split(image_paths, labels, test_size=0.3, random_state=42)
     return train_paths, val_paths, train_labels, val_labels
 
 def data_generator(image_paths, labels, batch_size=8, target_size=(299, 299)):
@@ -104,6 +104,8 @@ def build_inceptionv3_model(input_shape, num_classes):
     return model
 
 def main():
+    from timeit import default_timer as timer
+    start = timer()
     configure_gpu_memory(limit_gb=7)
 
     base_folder = "./feature_image/gabor_filter"
@@ -127,13 +129,15 @@ def main():
         steps_per_epoch=len(train_paths) // batch_size,
         validation_data=val_generator,
         validation_steps=len(val_paths) // batch_size,
-        epochs=50  # Increased epochs
+        epochs=100  # Increased epochs
     )
 
     # Save the trained model
     model_output_path = "./iris_recognition_inceptionv3_gabor.h5"
     model.save(model_output_path)
     print(f"Model saved to {model_output_path}")
+    end = timer()
+    print("Finished in "+str(end-start)+"s")
 
 if __name__ == "__main__":
     main()
