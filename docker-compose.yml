@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: iris_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: nguynmjnk
+      POSTGRES_PASSWORD: minh2004
+      POSTGRES_DB: iris_authentication
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  postgres_data:
