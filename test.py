@@ -11,5 +11,10 @@ print("Available GPUs:", tf.config.list_physical_devices('GPU'))
 
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "0"  # Show detailed logs
-import tensorflow as tf
+os.environ["OMP_NUM_THREADS"] = "6"
+os.environ["TF_NUM_INTRAOP_THREADS"] = "6"
+os.environ["TF_NUM_INTEROP_THREADS"] = "2"  # Adjust inter-op threads for better balance
+print("Intra-op threads:", tf.config.threading.get_intra_op_parallelism_threads())
+print("Inter-op threads:", tf.config.threading.get_inter_op_parallelism_threads())
+
 print(tf.config.list_physical_devices('GPU'))
