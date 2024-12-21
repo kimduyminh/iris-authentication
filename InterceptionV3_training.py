@@ -96,7 +96,7 @@ def main():
     print(f"Training samples: {len(train_paths)}, Validation samples: {len(val_paths)}")
 
     # Create data generators
-    batch_size = 4 # Adjust this to 8-16 if possible (VRAM) for more speed
+    batch_size = 32 # Adjust this to 8-16 if possible (VRAM) for more speed
     train_gen = data_generator(train_paths, train_labels, batch_size)
     val_gen = data_generator(val_paths, val_labels, batch_size)
 
@@ -110,7 +110,7 @@ def main():
 
     # Old early_stopping
     early_stopping = callbacks.EarlyStopping(
-        patience=5, restore_best_weights=True, monitor='val_loss'
+        patience=5, restore_best_weights=True, monitor='val_loss', mode='min'
     )
 
     lr_scheduler = callbacks.ReduceLROnPlateau(
@@ -151,6 +151,7 @@ def main():
     # Save the final model
     model.save(model_output_path)
     print(f"Model saved to {model_output_path}")
+    return(int(avg_train_acc*100), int(avg_val_acc*100))
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
