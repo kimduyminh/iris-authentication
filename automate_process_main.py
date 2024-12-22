@@ -1,7 +1,10 @@
 import preprocessing.localization as lc
 import preprocessing.normalization as nm
-import feature_selection.feature_selection as fs
 import InterceptionV3_training as model
+import feature_selection.Gabor_filter as gab
+import feature_selection.Haar_wavelet as hw
+import feature_selection.laplacian as lp
+import feature_selection.LogGabor_filter as lb
 import cv2
 import os
 import time
@@ -162,16 +165,16 @@ def multiple_feat_selection(option):
         option = int(input("Enter your choice: "))
     if option == 1:
         print("Processing Gabor Filter")
-        fs.process_and_save_imagesGabor("../preprocessed","../feature_image/gabor_filter")
+        gab.main()
     if option == 2:
         print("Processing Haar Wavelet")
-        fs.process_and_save_imagesHaar("../preprocessed","../feature_image/gabor_filter")
+        hw.main()
     if option == 3:
         print("Processing Laplacian")
-        fs.process_and_save_log_imagesLapla("../preprocessed", "../feature_image/gabor_filter",ksize=5, sigma=1.0)
+        lp.main()
     if option == 4:
         print("Processing Log Gabor")
-        fs.process_and_save_log_gabor("../preprocessed","../feature_image/gabor_filter", wavelength=10, sigma_on_f=0.56)
+        lb.main()
 
 def case_5_with_combinations():
     result = open("result.txt", "a")

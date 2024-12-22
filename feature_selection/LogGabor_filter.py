@@ -148,7 +148,8 @@ def process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_
 
             print(f"Processed and saved: {output_image_path}")
 
-
-base_folder = "../dataset"
-output_folder = "../feature_image/log_gabor"
-process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_on_f=0.56)
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_folder = os.path.join(script_dir, "../processed_image")
+    output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
+    process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_on_f=0.56)

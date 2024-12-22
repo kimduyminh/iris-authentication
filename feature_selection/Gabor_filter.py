@@ -108,9 +108,9 @@ def process_and_save_images(base_folder, output_folder):
             filtered_image = apply_gabor_filter(image, gabor_kernel)
             output_image_path = os.path.join(output_subfolder, image_name)
             cv2.imwrite(output_image_path, filtered_image)
-
-base_folder = "../dataset"
-output_folder = "../feature_image/gabor_filter"
-process_and_save_images(base_folder, output_folder)
-
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_folder = os.path.join(script_dir, "../processed_image")
+    output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
+    process_and_save_images(base_folder, output_folder)
 

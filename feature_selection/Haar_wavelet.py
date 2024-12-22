@@ -83,9 +83,9 @@ def process_and_save_images(base_folder, output_folder):
             plt.imsave(f"{output_subfolder}/cD.jpg", cD, cmap='gray')
 
             print(f"Processed and saved: {output_subfolder}")
-
-base_folder = "../dataset"
-output_folder = "../feature_image/haar_wavelet"
-process_and_save_images(base_folder, output_folder)
-
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_folder = os.path.join(script_dir, "../processed_image")
+    output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
+    process_and_save_images(base_folder, output_folder)
 
