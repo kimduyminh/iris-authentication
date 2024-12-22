@@ -1,0 +1,35 @@
+Trained with 1 and 1 :
+Train accuracy: 0.83
+Validation accuracy: 0.69
+Normalizing time: -0.00011579999772948213 s
+Feature selection time: -0.00012169999899924733 s
+Training time: -0.000158200000441866 s
+........................................
+Trained with 1 and 2 :
+Train accuracy: 0.77
+Validation accuracy: 0.62
+Normalizing time: -0.00011579999772948213 s
+Feature selection time: 4.769999941345304e-05 s
+Training time: 0.000592800002777949 s
+........................................
+Trained with 1 and 3 :
+Train accuracy: 0.77
+Validation accuracy: 0.65
+Normalizing time: -0.00011579999772948213 s
+Feature selection time: -0.00020389999917824753 s
+Training time: -0.005771200001618126 s
+........................................
+Trained with 1 and 1 :
+Train accuracy: 0.83
+Validation accuracy: 0.72
+Normalizing time: 0.00024059999850578606 s
+Feature selection time: 1.229999543284066e-05 s
+Training time: -0.0053397999981825706 s
+........................................
+Trained with 1 and 1 :
+Train accuracy: 0.78
+Validation accuracy: 0.66
+Normalizing time: 29.443145036697388 s
+Feature selection time: 0.010000228881835938 s
+Training time: 1206.6121344566345 s
+........................................

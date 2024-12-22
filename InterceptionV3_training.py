@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow.keras.applications import InceptionV3
 from tensorflow.keras import layers, models, optimizers, callbacks
 from sklearn.model_selection import train_test_split
+import time
 
 # -------------------------------
 # 1. Data Preparation
@@ -87,6 +88,7 @@ class CustomEarlyStopping(callbacks.Callback):
 
 
 def main():
+    start = time.time()
     base_folder = "./feature_image/gabor_filter"  # Dataset path
     model_output_path = "./models/iris_authentication_model.keras"
     log_file_path = "./logs/iris_authentication_log.txt"
@@ -151,7 +153,8 @@ def main():
     # Save the final model
     model.save(model_output_path)
     print(f"Model saved to {model_output_path}")
-    return(int(avg_train_acc*100), int(avg_val_acc*100))
+    end = time.time()
+    return(int(avg_train_acc*100), int(avg_val_acc*100),str(end-start))
 
 #if __name__ == "__main__":
 #    main()

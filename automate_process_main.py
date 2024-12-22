@@ -152,9 +152,6 @@ def iterate_dataset_normalize(dataset_path,option):
                     except Exception as e:
                         print(f"Error processing image: {image_path}, ID: {id_number}, Error: {e}")
                         error_ids.append(image_path)
-    print("Error files: ")
-    for error_id in error_ids:
-        print(error_id)
 def multiple_feat_selection(option):
     if (option == 0):
         print("Choose feature selection method:")
@@ -190,29 +187,30 @@ def case_5_with_combinations():
     feature_selection_options = [1, 2, 3, 4]
 
     for normalization_option in normalization_options:
-        start1 = timeit.timeit()
+        start1 = time.time()
         print(f"Starting normalization with option {normalization_option}...")
         iterate_dataset_normalize(processed_path, normalization_option)
-        end1 = timeit.timeit()
+        end1 = time.time()
         # After normalization, loop through all feature selection methods (Case 3)
         for feature_selection_option in feature_selection_options:
-            start2 = timeit.timeit()
+            start2 = time.time()
             print(f"Starting feature selection with option {feature_selection_option}...")
             multiple_feat_selection(feature_selection_option)
-            end2 = timeit.timeit()
+            end2 = time.time()
             time.sleep(60)
-            start3 = timeit.timeit()
             result_train = model.main()
-            end3 = timeit.timeit()
+            print("Writing to result.txt...")
             train_accuracy = result_train[0]
             val_accuracy = result_train[1]
+            time_trained = result_train[2]
             result.writelines("Trained with "+str(normalization_option)+" and "+str(feature_selection_option)+" :\n")
             result.writelines("Train accuracy: "+str(train_accuracy/100)+"\n")
             result.writelines("Validation accuracy: "+str(val_accuracy/100)+"\n")
             result.writelines("Normalizing time: "+str(end1-start1)+" s\n")
             result.writelines("Feature selection time: "+str(end2-start2)+" s\n")
-            result.writelines("Training time: "+str(end3-start3)+" s\n")
+            result.writelines("Training time: "+time_trained+" s\n")
             result.writelines("........................................\n")
+            print("Done writing result")
 
 
 print("Main Menu")
