@@ -110,7 +110,7 @@ def main():
 
     # Old early_stopping
     early_stopping = callbacks.EarlyStopping(
-        patience=5, restore_best_weights=True, monitor='val_loss', mode='min'
+        patience=5, restore_best_weights=True, monitor='accuracy', mode='max'
     )
 
     lr_scheduler = callbacks.ReduceLROnPlateau(
@@ -120,14 +120,14 @@ def main():
     # ChatGPT 360k/tháng early_stopping
     custom_early_stopping = CustomEarlyStopping(patience=5, threshold=0.99999)
 
-    epochs = 1000 # Can run up to 1000 or more (the more epochs the more accurate)
+    epochs = 50 # Can run up to 1000 or more (the more epochs the more accurate)
     history = model.fit(
         train_gen,
         steps_per_epoch=len(train_paths) // batch_size,
         validation_data=val_gen,
         validation_steps=len(val_paths) // batch_size,
         epochs=epochs,
-        callbacks=[checkpoint, custom_early_stopping, lr_scheduler]
+        callbacks=[checkpoint, early_stopping, lr_scheduler]
     )
 
     # Save training details to a text file for easier reading

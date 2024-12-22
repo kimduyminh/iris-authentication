@@ -4,7 +4,8 @@ import feature_selection.feature_selection as fs
 import InterceptionV3_training as model
 import cv2
 import os
-
+import time
+import timeit
 
 
 def iterate_dataset_localization(dataset_path):
@@ -163,16 +164,20 @@ def multiple_feat_selection(option):
     if (option == 0):
         option = int(input("Enter your choice: "))
     if option == 1:
+        print("Processing Gabor Filter")
         fs.process_and_save_imagesGabor("../preprocessed","../feature_image/gabor_filter")
     if option == 2:
+        print("Processing Haar Wavelet")
         fs.process_and_save_imagesHaar("../preprocessed","../feature_image/gabor_filter")
     if option == 3:
+        print("Processing Laplacian")
         fs.process_and_save_log_imagesLapla("../preprocessed", "../feature_image/gabor_filter",ksize=5, sigma=1.0)
     if option == 4:
+        print("Processing Log Gabor")
         fs.process_and_save_log_gabor("../preprocessed","../feature_image/gabor_filter", wavelength=10, sigma_on_f=0.56)
 
 def case_5_with_combinations():
-    result = open("result.txt", "w")
+    result = open("result.txt", "a")
     dataset_path = "dataset"
     processed_path = "processed_image"
 
@@ -185,19 +190,29 @@ def case_5_with_combinations():
     feature_selection_options = [1, 2, 3, 4]
 
     for normalization_option in normalization_options:
+        start1 = timeit.timeit()
         print(f"Starting normalization with option {normalization_option}...")
         iterate_dataset_normalize(processed_path, normalization_option)
-
+        end1 = timeit.timeit()
         # After normalization, loop through all feature selection methods (Case 3)
         for feature_selection_option in feature_selection_options:
+            start2 = timeit.timeit()
             print(f"Starting feature selection with option {feature_selection_option}...")
             multiple_feat_selection(feature_selection_option)
-            result_train=model.main()
-            train_accuracy=result_train[0]
-            val_accuracy=result_train[1]
-            result.writeln("Trained with "+normalization_option+" and "+feature_selection_option+" :")
-            result.writeln("Train accuracy: "+str(train_accuracy/100))
-            result.writeln("Validation accuracy: "+str(val_accuracy/100))
+            end2 = timeit.timeit()
+            time.sleep(60)
+            start3 = timeit.timeit()
+            result_train = model.main()
+            end3 = timeit.timeit()
+            train_accuracy = result_train[0]
+            val_accuracy = result_train[1]
+            result.writelines("Trained with "+str(normalization_option)+" and "+str(feature_selection_option)+" :\n")
+            result.writelines("Train accuracy: "+str(train_accuracy/100)+"\n")
+            result.writelines("Validation accuracy: "+str(val_accuracy/100)+"\n")
+            result.writelines("Normalizing time: "+str(end1-start1)+" s\n")
+            result.writelines("Feature selection time: "+str(end2-start2)+" s\n")
+            result.writelines("Training time: "+str(end3-start3)+" s\n")
+            result.writelines("........................................\n")
 
 
 print("Main Menu")
@@ -205,7 +220,7 @@ print("1. Multiple localization")
 print("2. Multiple Normalization")
 print("3. Multiple Feature Selection")
 print("4. Train")
-print("5. Looping thorugh all methods and testing")
+print("5. Looping through all methods and testing")
 option = int(input("Enter your choice: "))
 if option == 1:
     dataset_path = "dataset"
