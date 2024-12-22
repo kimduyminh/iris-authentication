@@ -44,12 +44,12 @@ def iterate_dataset_localization(dataset_path):
     print("Number of images: "+str(num_of_pics))
     print("Number of errors: "+str(num_of_err))
 def iterate_dataset_normalize(dataset_path,option):
-    print("Choose normalization method:")
-    print("1.HisEqual")
-    print("2.CLAHE")
-    print("3.Gamma Correction")
-    print("4.Contrast stretching")
     if option == "0":
+        print("Choose normalization method:")
+        print("1.HisEqual")
+        print("2.CLAHE")
+        print("3.Gamma Correction")
+        print("4.Contrast stretching")
         option = int(input("Enter your choice: "))
     error_ids = []
     if option == 1:
@@ -156,12 +156,12 @@ def iterate_dataset_normalize(dataset_path,option):
     for error_id in error_ids:
         print(error_id)
 def multiple_feat_selection(option):
-    print("Choose feature selection method:")
-    print("1.Gabor filter")
-    print("2.Haar wavelet")
-    print("3.Laplacian")
-    print("4.LogGabor")
     if (option == 0):
+        print("Choose feature selection method:")
+        print("1.Gabor filter")
+        print("2.Haar wavelet")
+        print("3.Laplacian")
+        print("4.LogGabor")
         option = int(input("Enter your choice: "))
     if option == 1:
         print("Processing Gabor Filter")
