@@ -23,7 +23,7 @@ def localization(image):
             x = circles[0][0][0]
             y = circles[0][0][1]
             r = circles[0][0][2]
-            zoom_out_factor = 1
+            zoom_out_factor = 4
             crop_size = int(r * zoom_out_factor * 2)
             x1, y1 = max(x - crop_size, 0), max(y - crop_size, 0)
             x2, y2 = min(x + crop_size, image.shape[1]), min(y + crop_size, image.shape[0])

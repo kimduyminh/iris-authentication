@@ -2,7 +2,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from db.models import find_user_by_username  # Import hàm tìm kiếm người dùng
-from camera_ui import Ui_MainWindow as CameraWindow  # Import giao diện camera
+import cam_detection as cd
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -45,6 +45,9 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+        # Connect the capture button to the open_camera function
+        self.capture.clicked.connect(self.open_camera)
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -65,10 +68,7 @@ class Ui_Dialog(object):
             print("Không tìm thấy người dùng với username:", username)
 
     def open_camera(self):
-        self.camera_window = QtWidgets.QMainWindow()
-        self.ui = CameraWindow()
-        self.ui.setupUi(self.camera_window)
-        self.camera_window.show()
+        cd.start_camera()
 
 
 import resources_rc
