@@ -47,7 +47,7 @@ def iterate_dataset_localization(dataset_path):
     print("Number of images: "+str(num_of_pics))
     print("Number of errors: "+str(num_of_err))
 def iterate_dataset_normalize(dataset_path,option):
-    if option == "0":
+    if option == 0:
         print("Choose normalization method:")
         print("1.HisEqual")
         print("2.CLAHE")
