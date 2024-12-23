@@ -177,12 +177,13 @@ def multiple_feat_selection(option):
         lb.main()
 
 def case_5_with_combinations():
+    number_of_trained_models = 0
     result = open("result.txt", "a")
     dataset_path = "dataset"
     processed_path = "processed_image"
 
     # Loop through all normalization methods (Case 2)
-    normalization_options = [1,2,3,4]
+    normalization_options = [2,3]
     feature_selection_options = [1, 2, 3, 4]
 
     for normalization_option in normalization_options:
@@ -199,6 +200,7 @@ def case_5_with_combinations():
             multiple_feat_selection(feature_selection_option)
             end2 = time.time()
             time.sleep(60)
+            print("Number of trained models: ", number_of_trained_models)
             result_train = model.main()
             print("Writing to result.txt...")
             train_accuracy = result_train[0]
@@ -212,6 +214,7 @@ def case_5_with_combinations():
             result.writelines("Training time: "+time_trained+" s\n")
             result.writelines("........................................\n")
             print("Done writing result")
+            number_of_trained_models += 1
 
 
 print("Main Menu")
