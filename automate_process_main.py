@@ -181,15 +181,13 @@ def case_5_with_combinations():
     dataset_path = "dataset"
     processed_path = "processed_image"
 
-    # Run localization first
-    print("Starting localization...")
-    iterate_dataset_localization(dataset_path)
-
     # Loop through all normalization methods (Case 2)
-    normalization_options = [1, 2, 3, 4]
+    normalization_options = [1,2,3,4]
     feature_selection_options = [1, 2, 3, 4]
 
     for normalization_option in normalization_options:
+        print("Starting localization...")
+        iterate_dataset_localization(dataset_path)
         start1 = time.time()
         print(f"Starting normalization with option {normalization_option}...")
         iterate_dataset_normalize(processed_path, normalization_option)
