@@ -72,7 +72,7 @@ def process_and_save_log_images(base_folder, output_folder, ksize=5, sigma=1.0):
 
             log_result = laplacian_of_gaussian(image, ksize, sigma)
 
-            output_image_name = os.path.splitext(image_name)[0] + "_LoG.jpg"
+            output_image_name = os.path.splitext(image_name)[0]
             output_image_path = os.path.join(output_subfolder, output_image_name)
             cv2.imwrite(output_image_path, log_result)
 

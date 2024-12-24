@@ -159,20 +159,20 @@ def multiple_feat_selection(option):
     if (option == 0):
         print("Choose feature selection method:")
         print("1.Gabor filter")
-        print("2.Haar wavelet")
+        print("2.LogGabor")
         print("3.Laplacian")
-        print("4.LogGabor")
+        print("4.Haar wavelet")
         option = int(input("Enter your choice: "))
     if option == 1:
         print("Processing Gabor Filter")
         gab.main()
-    if option == 2:
+    if option == 4:
         print("Processing Haar Wavelet")
         hw.main()
     if option == 3:
         print("Processing Laplacian")
         lp.main()
-    if option == 4:
+    if option == 2:
         print("Processing Log Gabor")
         lb.main()
 
@@ -184,7 +184,7 @@ def case_5_with_combinations():
 
     # Loop through all normalization methods (Case 2)
     normalization_options = [2,3]
-    feature_selection_options = [1, 2, 3, 4]
+    feature_selection_options = [1, 2, 3]
 
     for normalization_option in normalization_options:
         print("Starting localization...")

@@ -154,6 +154,7 @@ def main():
     model.save(model_output_path)
     print(f"Model saved to {model_output_path}")
     end = time.time()
+    os.rmdir("feature_image")
     return(int(avg_train_acc*100), int(avg_val_acc*100),str(end-start))
 
 #if __name__ == "__main__":

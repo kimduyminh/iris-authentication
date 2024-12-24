@@ -77,10 +77,10 @@ def process_and_save_images(base_folder, output_folder):
             output_subfolder = os.path.join(output_folder, f"{folder_index:03d}", image_base_name)
             os.makedirs(output_subfolder, exist_ok=True)
 
-            plt.imsave(f"{output_subfolder}/cA.jpg", cA, cmap='gray')
-            plt.imsave(f"{output_subfolder}/cH.jpg", cH, cmap='gray')
-            plt.imsave(f"{output_subfolder}/cV.jpg", cV, cmap='gray')
-            plt.imsave(f"{output_subfolder}/cD.jpg", cD, cmap='gray')
+            plt.imsave(f"{output_subfolder}cA.jpg", cA, cmap='gray')
+            plt.imsave(f"{output_subfolder}cH.jpg", cH, cmap='gray')
+            plt.imsave(f"{output_subfolder}cV.jpg", cV, cmap='gray')
+            plt.imsave(f"{output_subfolder}cD.jpg", cD, cmap='gray')
 
             print(f"Processed and saved: {output_subfolder}")
 def main():
@@ -88,4 +88,5 @@ def main():
     base_folder = os.path.join(script_dir, "../processed_image")
     output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
     process_and_save_images(base_folder, output_folder)
+
 
