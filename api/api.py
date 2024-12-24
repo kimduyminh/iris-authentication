@@ -1,181 +1,182 @@
-from flask import Flask, request, jsonify
-from werkzeug.utils import secure_filename
-import os
-from .db_connection import get_connection
-import cv2
-import numpy as np
+# import tensorflow as tf
+# import numpy as np
+# from PIL import Image
+# import io
+# import os
+#
+# def load_model(model_path):
+#     return tf.keras.models.load_model(model_path)
+#
+# def preprocess_image(image_bytes, target_size=(299, 299)):
+#     """
+#     Preprocess the input image bytes to match the model input format.
+#     """
+#     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+#     img = img.resize(target_size)
+#     img_array = np.array(img) / 255.0  # Normalize to [0, 1]
+#     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+#     return img_array
+#
+# def compare_images(model, image_bytes1, image_bytes2, threshold=0.5):
+#     """
+#     Compare two images by passing them one at a time through the model
+#     and calculating the similarity based on the outputs.
+#
+#     Args:
+#         model: The loaded TensorFlow model.
+#         image_bytes1: The first image in byte format.
+#         image_bytes2: The second image in byte format.
+#         threshold: Threshold for considering the outputs as a match.
+#
+#     Returns:
+#         True if the outputs are similar (within the threshold), False otherwise.
+#     """
+#     # Preprocess each image
+#     img1 = preprocess_image(image_bytes1)
+#     img2 = preprocess_image(image_bytes2)
+#
+#     # Get predictions for each image
+#     output1 = model.predict(img1)[0]  # Prediction for the first image
+#     output2 = model.predict(img2)[0]  # Prediction for the second image
+#
+#     # Compare the outputs (e.g., cosine similarity, Euclidean distance, etc.)
+#     similarity = np.linalg.norm(output1 - output2)  # Euclidean distance
+#     print(f"Similarity score: {similarity}")
+#
+#     # If similarity is below the threshold, consider the images as a match
+#     return similarity < threshold
+#
+# if __name__ == "__main__":
+#     model_path = r"./iris_authentication_model.keras"
+#     model = load_model(model_path)
+#
+#     # Test with two images
+#     with open(r".\processed_image\000\S6000S00.jpg", "rb") as f1, \
+#          open(r".\processed_image\001\S6001S03.jpg", "rb") as f2:
+#         image_bytes1 = f1.read()
+#         image_bytes2 = f2.read()
+#         result = compare_images(model, image_bytes1, image_bytes2, threshold=0.5)
+#         print("Images Match:" if result else "Images Do Not Match")
+#
+
 import tensorflow as tf
-import logging
+import numpy as np
+from PIL import Image
+import io
+import os
+import itertools
 
-app = Flask(__name__)
 
-# Configure logging
-logging.basicConfig(filename='app.log', level=logging.ERROR, format='%(asctime)s - %(message)s')
+def load_model(model_path):
+    return tf.keras.models.load_model(model_path)
 
-# Load trained model
-MODEL_PATH = "./models/iris_authentication_model.keras"
-model = tf.keras.models.load_model(MODEL_PATH)
 
-# Folder to store iris images
-IRIS_IMAGE_FOLDER = "./iris_images"
-os.makedirs(IRIS_IMAGE_FOLDER, exist_ok=True)
+def preprocess_image(image_bytes, target_size=(299, 299)):
+    """
+    Preprocess the input image bytes to match the model input format.
+    """
+    img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+    img = img.resize(target_size)
+    img_array = np.array(img) / 255.0  # Normalize to [0, 1]
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    return img_array
 
-# Helper functions
-def preprocess_image(image_path, target_size=(299, 299)):
-    image = cv2.imread(image_path, cv2.IMREAD_COLOR)
-    image = cv2.resize(image, target_size) / 255.0
-    return np.expand_dims(image, axis=0)
 
-def compare_iris(image1_path, image2_path):
-    img1 = preprocess_image(image1_path)
-    img2 = preprocess_image(image2_path)
-    pred1 = model.predict(img1)
-    pred2 = model.predict(img2)
-    return np.argmax(pred1) == np.argmax(pred2)
+def compare_images(model, image_bytes1, image_bytes2, threshold=0.5):
+    """
+    Compare two images by passing them one at a time through the model
+    and calculating the similarity based on the outputs.
+    """
+    img1 = preprocess_image(image_bytes1)
+    img2 = preprocess_image(image_bytes2)
 
-# API routes
-@app.route("/create-account", methods=["POST"])
-def create_account():
-    data = request.form
-    username = data.get("username")
-    email = data.get("email")
-    name = data.get("name")
-    iris_right = request.files.get("iris_image_right")
-    iris_left = request.files.get("iris_image_left")
+    output1 = model.predict(img1)[0]
+    output2 = model.predict(img2)[0]
 
-    if not all([username, email, name, iris_right, iris_left]):
-        return jsonify({"error": "Missing required fields"}), 400
+    similarity = np.linalg.norm(output1 - output2)  # Euclidean distance
+    return similarity < threshold, similarity  # Return match status and score
 
-    # Save iris images
-    right_path = os.path.join(IRIS_IMAGE_FOLDER, secure_filename(f"{username}_right.jpg"))
-    left_path = os.path.join(IRIS_IMAGE_FOLDER, secure_filename(f"{username}_left.jpg"))
-    iris_right.save(right_path)
-    iris_left.save(left_path)
 
-    # Insert user into database
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO users (username, email, name, iris_image_right, iris_image_left)
-            VALUES (%s, %s, %s, %s, %s)
-        """, (username, email, name, right_path, left_path))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return jsonify({"message": "Account created successfully"}), 201
-    except Exception as e:
-        logging.error(f"Error creating account for {username}: {e}")
-        return jsonify({"error": "Failed to create account"}), 500
+# def generate_test_cases(base_dir):
+#     """
+#     Generate test cases by iterating through the directory and pairing images.
+#     """
+#     test_cases = []
+#     for person_id, files in itertools.groupby(sorted(os.listdir(base_dir)), key=lambda x: x[:3]):
+#         files = list(files)
+#         # Test cases for the same person
+#         same_person_pairs = list(itertools.combinations(files, 2))
+#         test_cases.extend([(os.path.join(base_dir, person_id, f1), os.path.join(base_dir, person_id, f2), True)
+#                            for f1, f2 in same_person_pairs])
+#
+#     # Test cases for different people
+#     person_dirs = [os.path.join(base_dir, d) for d in sorted(os.listdir(base_dir))]
+#     for d1, d2 in itertools.combinations(person_dirs, 2):
+#         file1 = os.path.join(d1, sorted(os.listdir(d1))[0])
+#         file2 = os.path.join(d2, sorted(os.listdir(d2))[0])
+#         test_cases.append((file1, file2, False))
+#
+#     return test_cases
 
-@app.route("/login", methods=["POST"])
-def login():
-    data = request.form
-    username = data.get("username")
-    iris_file = request.files.get("iris_image")
 
-    if not all([username, iris_file]):
-        return jsonify({"error": "Missing required fields"}), 400
+# if __name__ == "__main__":
+#     base_dir = "./processed_image"
+#     model_path = r"./iris_authentication_model.keras"
+#     result_file = "comparison_results.txt"
+#     model = load_model(model_path)
+#
+#     test_cases = generate_test_cases(base_dir)
+#     test_cases = test_cases[:15]  # Limit to 15 test cases
+#
+#     with open(result_file, "w") as file:
+#         for idx, (img1_path, img2_path, expected_match) in enumerate(test_cases):
+#             with open(img1_path, "rb") as f1, open(img2_path, "rb") as f2:
+#                 img1_bytes = f1.read()
+#                 img2_bytes = f2.read()
+#                 match, similarity = compare_images(model, img1_bytes, img2_bytes, threshold=0.5)
+#                 result = (
+#                     f"Test Case {idx + 1}:\n"
+#                     f"Image 1: {img1_path}\n"
+#                     f"Image 2: {img2_path}\n"
+#                     f"Expected Match: {expected_match}\n"
+#                     f"Similarity: {similarity}\n"
+#                     f"Result: {'Match' if match else 'No Match'}\n"
+#                     f"{'-' * 50}\n"
+#                 )
+#                 file.write(result)
+#                 print(result)
+#
+#     print(f"Results saved to {result_file}")
 
-    # Save temporary iris image
-    temp_path = os.path.join(IRIS_IMAGE_FOLDER, "temp_iris.jpg")
-    iris_file.save(temp_path)
+def generate_true_test_cases(base_dir):
+    """
+    Generate test cases where images are from the same folder and person.
+    These are expected to produce a 'true' match output.
+    """
+    test_cases = []
+    # Iterate through each folder
+    for folder in sorted(os.listdir(base_dir)):
+        folder_path = os.path.join(base_dir, folder)
+        if os.path.isdir(folder_path):  # Ensure it's a directory
+            images = sorted([img for img in os.listdir(folder_path) if img.startswith("S6")])
+            # Create all combinations of image pairs within the folder
+            same_person_pairs = list(itertools.combinations(images, 2))
+            test_cases.extend([
+                (os.path.join(folder_path, img1), os.path.join(folder_path, img2), True)
+                for img1, img2 in same_person_pairs
+            ])
+    return test_cases
 
-    # Fetch user from database
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT iris_image_right, iris_image_left, email, name FROM users WHERE username = %s", (username,))
-        user = cursor.fetchone()
-        cursor.close()
-        conn.close()
-
-        if not user:
-            os.remove(temp_path)
-            return jsonify({"error": "User not found"}), 404
-
-        right_path, left_path, email, name = user
-        # Compare iris images
-        if compare_iris(temp_path, right_path) or compare_iris(temp_path, left_path):
-            os.remove(temp_path)
-            return jsonify({"message": "Login successful", "email": email, "name": name}), 200
-        else:
-            os.remove(temp_path)
-            return jsonify({"error": "Iris does not match"}), 403
-
-    except Exception as e:
-        logging.error(f"Error during login for {username}: {e}")
-        return jsonify({"error": "Failed to login"}), 500
-
-@app.route("/update-account", methods=["PUT"])
-def update_account():
-    data = request.form
-    username = data.get("username")
-    email = data.get("email")
-    name = data.get("name")
-    iris_right = request.files.get("iris_image_right")
-    iris_left = request.files.get("iris_image_left")
-
-    if not username:
-        return jsonify({"error": "Missing username"}), 400
-
-    updates = []
-    params = []
-
-    if email:
-        updates.append("email = %s")
-        params.append(email)
-    if name:
-        updates.append("name = %s")
-        params.append(name)
-    if iris_right:
-        right_path = os.path.join(IRIS_IMAGE_FOLDER, secure_filename(f"{username}_right_updated.jpg"))
-        iris_right.save(right_path)
-        updates.append("iris_image_right = %s")
-        params.append(right_path)
-    if iris_left:
-        left_path = os.path.join(IRIS_IMAGE_FOLDER, secure_filename(f"{username}_left_updated.jpg"))
-        iris_left.save(left_path)
-        updates.append("iris_image_left = %s")
-        params.append(left_path)
-
-    if not updates:
-        return jsonify({"error": "No updates provided"}), 400
-
-    params.append(username)
-    query = f"UPDATE users SET {', '.join(updates)} WHERE username = %s"
-
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute(query, params)
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return jsonify({"message": "Account updated successfully"}), 200
-    except Exception as e:
-        logging.error(f"Error updating account for {username}: {e}")
-        return jsonify({"error": "Failed to update account"}), 500
-
-@app.route("/delete-account", methods=["DELETE"])
-def delete_account():
-    data = request.form
-    username = data.get("username")
-
-    if not username:
-        return jsonify({"error": "Missing username"}), 400
-
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM users WHERE username = %s", (username,))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return jsonify({"message": "Account deleted successfully"}), 200
-    except Exception as e:
-        logging.error(f"Error deleting account for {username}: {e}")
-        return jsonify({"error": "Failed to delete account"}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    base_dir = "./processed_image"
+    true_test_cases = generate_true_test_cases(base_dir)
+
+    # Save to a text file
+    result_file = "true_test_cases.txt"
+    with open(result_file, "w") as file:
+        for idx, (img1_path, img2_path, expected_match) in enumerate(true_test_cases):
+            result = f"Test Case {idx + 1}:\nImage 1: {img1_path}\nImage 2: {img2_path}\nExpected Match: {expected_match}\n{'-' * 50}\n"
+            file.write(result)
+
+    print(f"True test cases saved to {result_file}")
