@@ -142,13 +142,14 @@ def process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_
             log_gabor = log_gabor_filter(image.shape, wavelength, sigma_on_f)
             filtered_image = apply_log_gabor(image, log_gabor)
 
-            output_image_name = os.path.splitext(image_name)[0] + "_LogGabor.jpg"
+            output_image_name = os.path.splitext(image_name)[0]+".jpg"
             output_image_path = os.path.join(output_subfolder, output_image_name)
             cv2.imwrite(output_image_path, (filtered_image * 255).astype(np.uint8))
 
             print(f"Processed and saved: {output_image_path}")
 
-
-base_folder = "../dataset"
-output_folder = "../feature_image/log_gabor"
-process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_on_f=0.56)
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_folder = os.path.join(script_dir, "../processed_image")
+    output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
+    process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_on_f=0.56)

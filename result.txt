@@ -1,0 +1,7 @@
+Trained with 1 and 1 :
+Train accuracy: 0.0
+Validation accuracy: 0.0
+Normalizing time: 57.64211940765381 s
+Feature selection time: 81.59059739112854 s
+Training time: 392.49939346313477 s
+........................................

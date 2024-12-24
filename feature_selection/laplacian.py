@@ -72,13 +72,15 @@ def process_and_save_log_images(base_folder, output_folder, ksize=5, sigma=1.0):
 
             log_result = laplacian_of_gaussian(image, ksize, sigma)
 
-            output_image_name = os.path.splitext(image_name)[0] + "_LoG.jpg"
+            output_image_name = os.path.splitext(image_name)[0]+".jpg"
             output_image_path = os.path.join(output_subfolder, output_image_name)
             cv2.imwrite(output_image_path, log_result)
 
             print(f"Processed and saved: {output_image_path}")
 
-base_folder = "../dataset"
-output_folder = "../feature_image/laplacian_of_gaussian"
-process_and_save_log_images(base_folder, output_folder, ksize=5, sigma=1.0)
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_folder = os.path.join(script_dir, "../processed_image")
+    output_folder = os.path.join(script_dir, "../feature_image/gabor_filter")
+    process_and_save_log_images(base_folder, output_folder, ksize=5, sigma=1.0)
 

@@ -1,0 +1,105 @@
+Test Case 1:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\001\S6001S00.jpg
+Expected Match: False
+Similarity: 1.411406397819519
+Result: No Match
+--------------------------------------------------
+Test Case 2:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\002\S6002S00.jpg
+Expected Match: False
+Similarity: 1.412287950515747
+Result: No Match
+--------------------------------------------------
+Test Case 3:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\003\S6003S00.jpg
+Expected Match: False
+Similarity: 1.4111571311950684
+Result: No Match
+--------------------------------------------------
+Test Case 4:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\004\S6004S00.jpg
+Expected Match: False
+Similarity: 1.412287950515747
+Result: No Match
+--------------------------------------------------
+Test Case 5:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\005\S6005S00.jpg
+Expected Match: False
+Similarity: 1.411974549293518
+Result: No Match
+--------------------------------------------------
+Test Case 6:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\006\S6006S00.jpg
+Expected Match: False
+Similarity: 1.4112952947616577
+Result: No Match
+--------------------------------------------------
+Test Case 7:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\007\S6007S00.jpg
+Expected Match: False
+Similarity: 1.411383867263794
+Result: No Match
+--------------------------------------------------
+Test Case 8:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\008\S6008S00.jpg
+Expected Match: False
+Similarity: 1.4116910696029663
+Result: No Match
+--------------------------------------------------
+Test Case 9:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\009\S6009S00.jpg
+Expected Match: False
+Similarity: 1.411759614944458
+Result: No Match
+--------------------------------------------------
+Test Case 10:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\010\S6010S00.jpg
+Expected Match: False
+Similarity: 1.4115430116653442
+Result: No Match
+--------------------------------------------------
+Test Case 11:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\011\S6011S00.jpg
+Expected Match: False
+Similarity: 1.4115865230560303
+Result: No Match
+--------------------------------------------------
+Test Case 12:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\012\S6012S00.jpg
+Expected Match: False
+Similarity: 1.4120429754257202
+Result: No Match
+--------------------------------------------------
+Test Case 13:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\013\S6013S00.jpg
+Expected Match: False
+Similarity: 1.41221022605896
+Result: No Match
+--------------------------------------------------
+Test Case 14:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\014\S6014S00.jpg
+Expected Match: False
+Similarity: 1.4113411903381348
+Result: No Match
+--------------------------------------------------
+Test Case 15:
+Image 1: ./processed_image\000\S6000S00.jpg
+Image 2: ./processed_image\015\S6015S00.jpg
+Expected Match: False
+Similarity: 1.4115774631500244
+Result: No Match
+--------------------------------------------------
