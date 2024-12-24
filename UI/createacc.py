@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from db.models import add_user  # Import hàm thêm người dùng vào database
-from camera_ui import Ui_MainWindow as CameraWindow  # Import giao diện camera
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -84,16 +83,7 @@ class Ui_Dialog(object):
             print("Đăng ký thành công!")
         else:
             print("Đăng ký thất bại!")
-
-    def open_camera(self):
-        self.camera_window = QtWidgets.QMainWindow()
-        self.ui = CameraWindow()
-        self.ui.setupUi(self.camera_window)
-        self.camera_window.show()
-
-
 import resources_rc
-
 
 if __name__ == "__main__":
     import sys

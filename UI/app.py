@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets
 from createacc import Ui_Dialog as CreateAccountDialog
 from login import Ui_Dialog as LoginDialog
+import cam_detection as cd
 
 class MainApp:
     def __init__(self):
@@ -12,34 +13,33 @@ class MainApp:
         ui = LoginDialog()
         ui.setupUi(self.current_window)
 
-        # Kết nối nút "Create Account" với giao diện đăng ký
+        # Kết nối các nút
         ui.createaccbutton.clicked.connect(self.show_create_account)
-
-        # Kết nối nút "Capture" để mở camera (tùy chỉnh thêm logic tại đây)
-        ui.capture.clicked.connect(self.show_camera)
+        ui.capture.clicked.connect(self.open_camera)
 
         self.current_window.show()
 
     def show_create_account(self):
-        if self.current_window is not None:
+        if self.current_window:
             self.current_window.close()
 
         self.current_window = QtWidgets.QDialog()
         ui = CreateAccountDialog()
         ui.setupUi(self.current_window)
 
-        # Kết nối nút "Login" với giao diện đăng nhập
+        # Kết nối các nút
         ui.login.clicked.connect(self.show_login)
+        ui.capture.clicked.connect(self.open_camera)
 
         self.current_window.show()
 
-    def show_camera(self):
-        # Placeholder cho giao diện camera (nếu có)
-        print("Camera functionality goes here")
+    def open_camera(self):
+        cd.start_cam()
 
     def run(self):
-        self.show_login()  # Mặc định bắt đầu với giao diện Login
+        self.show_login()
         self.app.exec_()
+
 
 if __name__ == "__main__":
     app = MainApp()
