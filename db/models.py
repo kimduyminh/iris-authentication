@@ -1,15 +1,15 @@
 from .db_connection import get_connection
 
 # Hàm thêm người dùng
-def add_user(username, email, name, iris_image_right, iris_image_left):
+def add_user(username, email, name, iris_image):
     try:
         conn = get_connection()
         if conn:
             cursor = conn.cursor()
             cursor.execute("""
-                INSERT INTO users (username, email, name, iris_image_right, iris_image_left)
+                INSERT INTO users (username, email, name, iris_image)
                 VALUES (%s, %s, %s, %s, %s)
-            """, (username, email, name, iris_image_right, iris_image_left))
+            """, (username, email, name, iris_image))
             conn.commit()
             cursor.close()
             conn.close()

@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from db.models import find_user_by_username  # Import hàm tìm kiếm người dùng
+import resources_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -52,21 +52,12 @@ class Ui_Dialog(object):
         self.createaccbutton.setText(_translate("Dialog", "Create Account"))
         self.capture.setText(_translate("Dialog", "Capture"))
 
-    def login_user(self):
-        username = self.username.text()
-        user = find_user_by_username(username)
-        if user:
-            print("Đăng nhập thành công!")
-            print(f"Thông tin người dùng: {user}")
-        else:
-            print("Không tìm thấy người dùng với username:", username)
-import resources_rc
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
+    # def login_user(self):
+    #     username = self.username.text()
+    #     user = find_user_by_username(username)
+    #     if user:
+    #         print("Đăng nhập thành công!")
+    #         print(f"Thông tin người dùng: {user}")
+    #     else:
+    #         print("Không tìm thấy người dùng với username:", username)

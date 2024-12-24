@@ -1,3 +1,5 @@
+import os
+import shutil
 import cv2
 import numpy as np
 
@@ -35,19 +37,24 @@ def localization(frame):
         print(f"Error: {e}")
         return None
 
-def start_cam():
-    print("CAM STARTED")
-# Open the default camera
+def start_cam_create(username: str):
+    print("Starting camera...")
+
+    # Ensure the folder exists
+    folder_path = os.path.join("database_images", username)
+    os.makedirs(folder_path, exist_ok=True)
+
     cam = cv2.VideoCapture(0)
+    if not cam.isOpened():
+        raise Exception("Cannot open camera.")
 
     detected_circle = None  # Store detected circle data
+    image_names = []  # List to store saved image names
 
     while True:
         ret, frame = cam.read()
-
         if not ret:
-            print("Failed to grab frame.")
-            break
+            raise Exception("Failed to grab frame.")
 
         # Keep a clean version of the frame for saving
         clean_frame = frame.copy()
@@ -73,18 +80,33 @@ def start_cam():
             # Press 'q' to exit the loop manually
             print("Exiting...")
             break
+
         elif key == ord('s') and detected_circle is not None:
-            # Save the image when 's' is pressed and a circle is detected
+            # Save 4 images when 's' is pressed and a circle is detected
             x, y, r = detected_circle
             crop_size = int(r * 1.5)
             x1, y1 = max(x - crop_size, 0), max(y - crop_size, 0)
             x2, y2 = min(x + crop_size, clean_frame.shape[1]), min(y + crop_size, clean_frame.shape[0])
             cropped_image = clean_frame[y1:y2, x1:x2]  # Use clean_frame for saving
 
-            # Save the cropped image
-            cv2.imwrite(r"captured/detected_iris.jpg", cropped_image)
-            print("Iris detected and image saved as 'captured/detected_iris.jpg'.")
+            # Save 4 images in the folder with names username_01.jpg, username_02.jpg, username_03.jpg, username_04.jpg
+            for i in range(1, 5):
+                image_name = f"{username}_{i:02}.jpg"  # Format the image name
+                image_path = os.path.join(folder_path, image_name)
+                cv2.imwrite(image_path, cropped_image)
+                image_names.append(image_name)  # Add the image name to the list
+                print(f"Image {image_name} saved at {image_path}")
+
+            print("All 4 images have been saved successfully.")
+            break
 
     # Release the camera and close the window
     cam.release()
     cv2.destroyAllWindows()
+
+    # Delete the folder if no images were saved
+    if not image_names:
+        print(f"Deleting folder {folder_path} because no images were saved.")
+        shutil.rmtree(folder_path, ignore_errors=True)
+
+    return image_names  # Return the list of image names

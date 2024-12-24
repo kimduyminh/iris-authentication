@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from db.models import add_user  # Import hàm thêm người dùng vào database
+import resources_rc
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -71,25 +71,16 @@ class Ui_Dialog(object):
         self.label_5.setText(_translate("Dialog", "Already have an account?"))
         self.login.setText(_translate("Dialog", "Login"))
         self.capture.setText(_translate("Dialog", "Capture"))
+    # def save_user(self):
+    #     username = self.username.text()
+    #     email = self.email.text()
+    #     name = self.name.text()
+    #     iris_image = f"{username}_iris.jpg"  # Giả định tên file ảnh
+    #
+    #     # Lưu thông tin vào database
+    #     if add_user(username, email, name, iris_image):
+    #         print("Đăng ký thành công!")
+    #     else:
+    #         print("Đăng ký thất bại!")
 
-    def save_user(self):
-        username = self.username.text()
-        email = self.email.text()
-        name = self.name.text()
-        iris_image = f"{username}_iris.jpg"  # Giả định tên file ảnh
 
-        # Lưu thông tin vào database
-        if add_user(username, email, name, iris_image):
-            print("Đăng ký thành công!")
-        else:
-            print("Đăng ký thất bại!")
-import resources_rc
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
-    sys.exit(app.exec_())
