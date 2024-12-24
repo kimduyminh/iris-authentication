@@ -31,10 +31,6 @@ class Ui_Dialog(object):
         self.logout.setGeometry(QtCore.QRect(430, 20, 151, 31))
         self.logout.setStyleSheet("background-color: rgb(167, 168, 167); font-size:10pt; color:rgb(255, 255, 255)")
         self.logout.setObjectName("logout")
-        self.save = QtWidgets.QPushButton(Dialog)
-        self.save.setGeometry(QtCore.QRect(230, 420, 151, 31))
-        self.save.setStyleSheet("background-color: rgb(167, 168, 167); font-size:10pt; color:rgb(255, 255, 255)")
-        self.save.setObjectName("save")
         self.lineEdit = QtWidgets.QLineEdit(Dialog)
         self.lineEdit.setGeometry(QtCore.QRect(240, 170, 231, 51))
         self.lineEdit.setObjectName("lineEdit")
@@ -56,7 +52,6 @@ class Ui_Dialog(object):
         self.label_4.setText(_translate("Dialog", "Name"))
         self.label.setText(_translate("Dialog", "Profile"))
         self.logout.setText(_translate("Dialog", "Log out"))
-        self.save.setText(_translate("Dialog", "Save"))
 
 
 if __name__ == "__main__":
