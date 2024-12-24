@@ -87,9 +87,12 @@ class CustomEarlyStopping(callbacks.Callback):
             self.counter = 0
 
 
-def main():
+def main(param):
     start = time.time()
-    base_folder = "./feature_image/gabor_filter"  # Dataset path
+    if param == 0:
+        base_folder = "./feature_image/gabor_filter"
+    if param == 1:
+        base_folder = "./processed_image"# Dataset path
     model_output_path = "./models/iris_authentication_model.keras"
     log_file_path = "./logs/iris_authentication_log.txt"
 

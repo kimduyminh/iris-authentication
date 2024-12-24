@@ -183,8 +183,8 @@ def case_5_with_combinations():
     processed_path = "processed_image"
 
     # Loop through all normalization methods (Case 2)
-    normalization_options = [2,3]
-    feature_selection_options = [1, 2, 3]
+    normalization_options = [1, 2]
+    feature_selection_options = [1]
 
     for normalization_option in normalization_options:
         print("Starting localization...")
@@ -201,7 +201,7 @@ def case_5_with_combinations():
             end2 = time.time()
             time.sleep(60)
             print("Number of trained models: ", number_of_trained_models)
-            result_train = model.main()
+            result_train = model.main(0)
             print("Writing to result.txt...")
             train_accuracy = result_train[0]
             val_accuracy = result_train[1]
@@ -216,6 +216,37 @@ def case_5_with_combinations():
             print("Done writing result")
             number_of_trained_models += 1
 
+def case_6_with_combinations():
+    number_of_trained_models = 0
+    result = open("result.txt", "a")
+    dataset_path = "dataset"
+    processed_path = "processed_image"
+
+    # Loop through all normalization methods (Case 2)
+    normalization_options = [1,2,3,4]
+
+    for normalization_option in normalization_options:
+        print("Starting localization...")
+        iterate_dataset_localization(dataset_path)
+        start1 = time.time()
+        print(f"Starting normalization with option {normalization_option}...")
+        iterate_dataset_normalize(processed_path, normalization_option)
+        end1 = time.time()
+        time.sleep(60)
+        print("Number of trained models: ", number_of_trained_models)
+        result_train = model.main(1)
+        print("Writing to result.txt...")
+        train_accuracy = result_train[0]
+        val_accuracy = result_train[1]
+        time_trained = result_train[2]
+        result.writelines("Trained with "+str(normalization_option)+" :\n")
+        result.writelines("Train accuracy: "+str(train_accuracy/100)+"\n")
+        result.writelines("Validation accuracy: "+str(val_accuracy/100)+"\n")
+        result.writelines("Normalizing time: "+str(end1-start1)+" s\n")
+        result.writelines("Training time: "+time_trained+" s\n")
+        result.writelines("........................................\n")
+        print("Done writing result")
+        number_of_trained_models += 1
 
 print("Main Menu")
 print("1. Multiple localization")
@@ -223,6 +254,7 @@ print("2. Multiple Normalization")
 print("3. Multiple Feature Selection")
 print("4. Train")
 print("5. Looping through all methods and testing")
+print("6. Looping through all normalization without feature selection")
 option = int(input("Enter your choice: "))
 if option == 1:
     dataset_path = "dataset"
@@ -233,10 +265,12 @@ if option == 2:
 if option == 3:
     multiple_feat_selection(0)
 if option == 4:
-    model.main()
+    print("Training model with feature selection or not ?")
+    print("1. With feature selection")
+    print("2. Without feature selection")
+    opt=int(input())
+    model.main(opt)
 if option == 5:
     case_5_with_combinations()
-
-
-
-
+if option == 6:
+    case_6_with_combinations()

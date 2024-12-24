@@ -1,42 +1,7 @@
-Trained with 2 and 1 :
-Train accuracy: 0.71
-Validation accuracy: 0.63
-Normalizing time: 46.025120973587036 s
-Feature selection time: 39.19983530044556 s
-Training time: 1169.5368859767914 s
-........................................
-Trained with 2 and 2 :
-Train accuracy: 0.81
-Validation accuracy: 0.7
-Normalizing time: 46.025120973587036 s
-Feature selection time: 70.93672752380371 s
-Training time: 1964.119328737259 s
-........................................
-Trained with 2 and 3 :
-Train accuracy: 0.83
-Validation accuracy: 0.75
-Normalizing time: 46.025120973587036 s
-Feature selection time: 21.721012592315674 s
-Training time: 4375.566308021545 s
-........................................
-Trained with 2 and 4 :
-Train accuracy: 0.51
-Validation accuracy: 0.45
-Normalizing time: 46.025120973587036 s
-Feature selection time: 48.660661935806274 s
-Training time: 6512.498121261597 s
-........................................
-Trained with 3 and 1 :
-Train accuracy: 0.43
-Validation accuracy: 0.32
-Normalizing time: 42.25674390792847 s
-Feature selection time: 57.70105171203613 s
-Training time: 6498.332371234894 s
-........................................
-Trained with 3 and 2 :
-Train accuracy: 0.44
-Validation accuracy: 0.33
-Normalizing time: 42.25674390792847 s
-Feature selection time: 76.20688009262085 s
-Training time: 6507.292959451675 s
+Trained with 1 and 1 :
+Train accuracy: 0.0
+Validation accuracy: 0.0
+Normalizing time: 57.64211940765381 s
+Feature selection time: 81.59059739112854 s
+Training time: 392.49939346313477 s
 ........................................
