@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    iris_image VARCHAR(255) NOT NULL
+);
