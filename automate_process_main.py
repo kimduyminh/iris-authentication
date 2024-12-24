@@ -1,6 +1,6 @@
 import preprocessing.localization as lc
 import preprocessing.normalization as nm
-import InterceptionV3_training as model
+import InceptionV3_training as model
 import feature_selection.Gabor_filter as gab
 import feature_selection.Haar_wavelet as hw
 import feature_selection.laplacian as lp
@@ -268,7 +268,7 @@ if option == 4:
     print("Training model with feature selection or not ?")
     print("1. With feature selection")
     print("2. Without feature selection")
-    opt=int(input())
+    opt=int(input())-1
     model.main(opt)
 if option == 5:
     case_5_with_combinations()
