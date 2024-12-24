@@ -142,7 +142,7 @@ def process_and_save_log_gabor(base_folder, output_folder, wavelength=10, sigma_
             log_gabor = log_gabor_filter(image.shape, wavelength, sigma_on_f)
             filtered_image = apply_log_gabor(image, log_gabor)
 
-            output_image_name = os.path.splitext(image_name)[0]
+            output_image_name = os.path.splitext(image_name)[0]+".jpg"
             output_image_path = os.path.join(output_subfolder, output_image_name)
             cv2.imwrite(output_image_path, (filtered_image * 255).astype(np.uint8))
 

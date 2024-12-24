@@ -183,8 +183,8 @@ def case_5_with_combinations():
     processed_path = "processed_image"
 
     # Loop through all normalization methods (Case 2)
-    normalization_options = [2,3]
-    feature_selection_options = [1, 2, 3]
+    normalization_options = [3,4]
+    feature_selection_options = [2, 3]
 
     for normalization_option in normalization_options:
         print("Starting localization...")
