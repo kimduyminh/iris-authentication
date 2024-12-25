@@ -1,6 +1,6 @@
 import preprocessing.localization as lc
 import preprocessing.normalization as nm
-import InceptionV3_training as model
+from model import InceptionV3_training as model
 import feature_selection.Gabor_filter as gab
 import feature_selection.Haar_wavelet as hw
 import feature_selection.laplacian as lp
@@ -8,7 +8,6 @@ import feature_selection.LogGabor_filter as lb
 import cv2
 import os
 import time
-import timeit
 
 
 def iterate_dataset_localization(dataset_path):
