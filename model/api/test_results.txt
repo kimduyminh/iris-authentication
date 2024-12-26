@@ -1,0 +1,8 @@
+Test Case 1:
+Image 1: C:\Code\Biometric\iris-authentication\captured\Screenshot 2024-12-25 160055.png
+Image 2: C:\Code\Biometric\iris-authentication\database_images\test\Screenshot 2024-12-25 160055.png
+Similarity Score: 0.0000
+Prediction: Match
+--------------------------------------------------
+Correct Predictions: 0/1
+Accuracy: 0.00%

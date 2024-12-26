@@ -30,6 +30,19 @@ def localization(frame):
         print(f"Error in localization: {e}")
         return None
 
+<<<<<<< HEAD
+def apply_hist_equalization(image):
+    """
+    Apply histogram equalization to enhance the contrast of the image.
+    Works on grayscale images.
+    """
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # Convert to grayscale
+    equalized = cv2.equalizeHist(gray)  # Apply histogram equalization
+    return cv2.cvtColor(equalized, cv2.COLOR_GRAY2BGR)  # Convert back to BGR for consistency
+
+
+=======
+>>>>>>> 41edff552eb5ce190d5196e05d62a66a96ad9c72
 def start_cam_login(username: str):
     folder_path = "../captured"
     os.makedirs(folder_path, exist_ok=True)
@@ -72,6 +85,12 @@ def start_cam_login(username: str):
             x2, y2 = min(x + crop_size, clean_frame.shape[1]), min(y + crop_size, clean_frame.shape[0])
             cropped_image = clean_frame[y1:y2, x1:x2]
 
+<<<<<<< HEAD
+            # Apply histogram equalization
+            # equalized_image = apply_hist_equalization(cropped_image)
+
+=======
+>>>>>>> 41edff552eb5ce190d5196e05d62a66a96ad9c72
             # Save 4 images in the 'captured' folder
             for i in range(1, 5):
                 image_path = os.path.join(folder_path, f"{i}.jpg")
@@ -137,6 +156,12 @@ def start_cam_create(username: str):
             x2, y2 = min(x + crop_size, clean_frame.shape[1]), min(y + crop_size, clean_frame.shape[0])
             cropped_image = clean_frame[y1:y2, x1:x2]  # Use clean_frame for saving
 
+<<<<<<< HEAD
+            # Apply histogram equalization
+            # equalized_image = apply_hist_equalization(cropped_image)
+
+=======
+>>>>>>> 41edff552eb5ce190d5196e05d62a66a96ad9c72
             # Save 4 images in the folder with names username_01.jpg, username_02.jpg, username_03.jpg, username_04.jpg
             for i in range(1, 5):
                 image_name = f"{username}_{i:02}.jpg"  # Format the image name
@@ -158,4 +183,8 @@ def start_cam_create(username: str):
         print(f"Deleting folder {folder_path} because no images were saved.")
         shutil.rmtree(folder_path, ignore_errors=True)
 
+<<<<<<< HEAD
     return image_names
+=======
+    return image_names
+>>>>>>> 41edff552eb5ce190d5196e05d62a66a96ad9c72
