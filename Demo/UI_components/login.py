@@ -1,10 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 41edff552eb5ce190d5196e05d62a66a96ad9c72
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
